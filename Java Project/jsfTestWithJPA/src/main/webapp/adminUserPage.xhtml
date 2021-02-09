@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+</h:head>
+<h:body>
+	<h:outputText value="#{userController.checkPage(user)}" />
+	<h:outputText value="#{user.loadData()}" />
+	<h3>Users</h3>
+	<h:dataTable value="#{user.data}" var="user" border="2" cellspacing="1"
+		cellpadding="1">
+		<h:column>
+			<f:facet name="header">Name</f:facet>    				
+			   #{user.userName}
+			</h:column>
+
+		<h:column>
+			<f:facet name="header">Last Name</f:facet>
+			   #{user.userLastName}
+			</h:column>
+
+		<h:column>
+			<f:facet name="header">e-mail</f:facet>
+			   #{user.email}
+			</h:column>
+
+		<h:column>
+			<f:facet name="header">User Type</f:facet>
+			   #{user.userType}
+			</h:column>
+	</h:dataTable>
+	<div>
+		<h:button value="Back" outcome="adminPage" />
+	</div>
+
+</h:body>
+</html>

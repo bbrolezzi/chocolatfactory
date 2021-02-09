@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:ui="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:mc="http://java.sun.com/jsf/composite/components">
+<h:body>
+	<h:outputText value="#{userController.checkPage(user)}" />
+	<h3>Select Chocolat</h3>
+	<h:form>
+		<h:panelGrid columns="8" id="createUserPanel">
+			Type:
+			<h:selectOneMenu value="#{chocolat.chocId}">
+				<!-- value, itemLabel and itemValue correspond chocolat entity  -->
+				<f:selectItems value="#{chocolat.data}" var="chocolat"
+					itemLabel="#{chocolat.chocFlavor}" itemValue="#{chocolat.chocId}" />
+			</h:selectOneMenu>
+			<p:commandButton
+				action="#{chocolatController.checkChocStock(chocolat)}" ajax="false"
+				value="Check Stock Available" />
+			<div>
+				Stock:
+				<h:inputText value="#{chocolat.chocStock}"
+					readonly="#{facesContext.renderResponse}" />
+				Price:
+				<h:inputText value="#{chocolat.chocPrice}"
+					readonly="#{facesContext.renderResponse}" />
+			</div>
+		</h:panelGrid>
+		<hr />
+		<h:panelGrid columns="3" id="clientPurchase">
+	    	Choose the amnount of chocolat: 
+	        <h:inputText id="chosenQuantity"
+				value="#{chocolat.chocNewQuantity}" />
+			<p:commandButton
+				action="#{chocolatController.chocOrderPrice(chocolat)}" ajax="false"
+				value="Total" />
+			Price to pay:
+			<h:inputText value="#{chocolat.chocOrderPrice}"
+				readonly="#{facesContext.renderResponse}" />€
+		</h:panelGrid>
+		<hr />
+		<h3>Insert Money</h3>
+		<h:panelGrid columns="2">
+			<h:outputText value="#{money.data[0].euro}€" />
+			<h:inputText id="euro020" value="#{money.euro020}" />
+			<h:outputText value="#{money.data[1].euro}€" />
+			<h:inputText id="euro050" value="#{money.euro050}" />
+			<h:outputText value="#{money.data[2].euro}€" />
+			<h:inputText id="euro1" value="#{money.euro1}" />
+			<h:outputText value="#{money.data[3].euro}€" />
+			<h:inputText id="euro2" value="#{money.euro2}" />
+			<h:outputText value="#{money.data[4].euro}€" />
+			<h:inputText id="euro5" value="#{money.euro5}" />
+			<h:outputText value="#{money.data[5].euro}€" />
+			<h:inputText id="euro10" value="#{money.euro10}" />
+			<h:outputText value="#{money.data[6].euro}€" />
+			<h:inputText id="euro20" value="#{money.euro20}" />
+		</h:panelGrid>
+		<hr />
+		<p:outputPanel>
+			<p:commandButton value="Cancel" action="home.xhtml" />
+			<!-- add user as parameter to get user data and transfer to transactions database later -->
+			<p:commandButton
+				action="#{moneyController.submitOrder(money, chocolat)}"
+				ajax="false" value="Submit Order" />
+		</p:outputPanel>
+		<h3>Your Exchange</h3>
+		<h:outputText value="#{money.clientExchange}" />
+		<hr />
+		<h:outputText value="#{money.message}" />
+	</h:form>
+	<div>
+		<h:form>
+			<p:commandButton action="#{userController.logout()}" ajax="false"
+				value="Logout" />
+		</h:form>
+	</div>
+</h:body>
+</html>

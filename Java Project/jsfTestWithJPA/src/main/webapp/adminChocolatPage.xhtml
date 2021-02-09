@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+</h:head>
+<h:body>
+	<h:outputText value="#{userController.checkPage(user)}" />
+	<h3>Chocolate Management</h3>
+	<div>
+		<h:form>
+			<h:selectOneMenu value="#{chocolat.chocId}">
+				<!-- value, itemLabel and itemValue correspond chocolat entity  -->
+				<f:selectItems value="#{chocolat.data}" var="chocolat"
+					itemLabel="#{chocolat.chocFlavor}" itemValue="#{chocolat.chocId}" />
+				<!-- make it possible to update automatically -->
+				<p:ajax listener="#{chocolat.valueChanged}" />
+			</h:selectOneMenu>
+			<p:commandButton
+				action="#{chocolatController.checkChocStock(chocolat)}" ajax="false"
+				value="Check Stock Available" />
+			<div>
+				Current Stock:
+				<h:outputText value="#{chocolat.chocStock}" />
+				Current Price:
+				<h:outputText value="#{chocolat.chocPrice}" />
+			</div>
+			<div>
+				New Stock:
+				<h:inputText id="newQuantity" value="#{chocolat.chocNewQuantity}" />
+				New Price:
+				<h:inputText id="newPrice" value="#{chocolat.chocNewPrice}" />
+				<p:commandButton
+					action="#{chocolatController.editChocStock(chocolat)}" ajax="false"
+					value="Update Values" />
+			</div>
+			<div>
+				<p:commandButton
+					action="#{chocolatController.deleteChocolat(chocolat)}"
+					ajax="false" value="Delete Flavor" />
+				<p:commandButton title="Add Flavor" onclick="PF('crChoc').show()" />
+			</div>
+		</h:form>
+	</div>
+	<h:form id="chocCreateForm">
+		<p:dialog id="createChocModal" modal="true" widgetVar="crChoc"
+			resizable="false" stylr="position:absolute" header="Add Chocolat"
+			hideEffect="false">
+			<h:outputText value="#{chocolatController.cleanVariables(chocolat)}" />
+			<h:panelGrid columns="2" id="createChocPanel">
+					Flavor:
+					<h:inputText value="#{chocolat.chocFlavor}" id="chocFlavor" />
+					Price:
+					<h:inputText value="#{chocolat.chocPrice}" id="chocPrice" />
+					Quantity: 
+					<h:inputText value="#{chocolat.chocStock}" id="chocStock" />
+			</h:panelGrid>
+			<p:outputPanel>
+				<p:commandButton value="Cancel" ajax="false"
+					onclick="PF('crChoc').hide()" />
+				<p:commandButton value="Add" ajax="false"
+					action="#{chocolatController.addChocolat(chocolat)}" />
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+	<div>
+		<h:button value="Back" outcome="adminPage" />
+	</div>
+
+</h:body>
+</html>

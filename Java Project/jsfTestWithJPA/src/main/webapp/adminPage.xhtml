@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:body>
+	<h:outputText value="#{userController.checkPage(user)}" />
+	<h3>Admin Menu</h3>
+	<hr />
+	<h:panelGrid columns="1" id="createMoneyPanel">
+		<h:button value="Chocolat Management" outcome="adminChocolatPage" />
+		<h:button value="Money Management" outcome="adminMoneyPage" />
+		<h:button value="User Management" outcome="adminUserPage" />
+	</h:panelGrid>
+	<hr />
+	<div>
+		<h:form>
+			<p:commandButton action="#{userController.logout()}" ajax="false"
+				value="Logout" />
+		</h:form>
+	</div>
+</h:body>
+</html>

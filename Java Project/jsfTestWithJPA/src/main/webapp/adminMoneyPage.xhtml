@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+</h:head>
+<h:body>
+	<h:outputText value="#{userController.checkPage(user)}" />
+	<h3>Chocolate Management</h3>
+	<div>
+		<h:form>
+			<h:selectOneMenu value="#{money.moneyId}">
+				<f:selectItems value="#{money.data}" var="money"
+					itemLabel="#{money.euro}€" itemValue="#{money.moneyId}" />
+			</h:selectOneMenu>
+			<p:commandButton
+				action="#{moneyController.checkMoneyAvailable(money)}" ajax="false"
+				value="Check Amount Available" />
+			<div>
+				Current Amount:
+				<h:outputText value="#{money.euroAmount}" />
+			</div>
+			<div>
+				New Amount:
+				<h:inputText id="newAmount" value="#{money.newEuroAmount}" />
+				<p:commandButton action="#{moneyController.editMoneyAmount(money)}"
+					ajax="false" value="Update Values" />
+			</div>
+			<div>
+				<p:commandButton action="#{moneyController.deleteMoney(money)}"
+					ajax="false" value="Delete Money" />
+				<p:commandButton title="Add Money" onclick="PF('crMoney').show()" />
+
+			</div>
+		</h:form>
+	</div>
+	<h:form id="moneyCreateForm">
+		<p:dialog id="createMoneyModal" modal="true" widgetVar="crMoney"
+			resizable="false" stylr="position:absolute" header="Create Money"
+			hideEffect="false">
+			<h:outputText value="#{moneyController.cleanVariables(money)}" />
+			<h:panelGrid columns="2" id="createMoneyPanel">
+				Value:
+				<h:inputText value="#{money.euro}" id="euro" />
+				Amount:
+				<h:inputText value="#{money.euroAmount}" id="amount" />
+			</h:panelGrid>
+			<p:outputPanel>
+				<p:commandButton value="Cancel" ajax="false"
+					onclick="PF('crMoney').hide()" />
+				<p:commandButton value="Add" ajax="false"
+					action="#{moneyController.addMoney(money)}" />
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+	<div>
+		<h:button value="Back" outcome="adminPage" />
+	</div>
+
+</h:body>
+</html>

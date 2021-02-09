@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+</h:head>
+<h:body>
+	<div>
+		<h:form>
+			<h:message for="loginPanel" style="color:red;" />
+			<h:panelGrid columns="2" id="loginPanel">
+			    E-Mail:
+				<h:inputText id="email" value="#{user.email}" />
+			    Password: 
+			    <h:inputSecret id="password" value="#{user.password}" />
+			</h:panelGrid>
+			<div>
+				<p:commandButton id="loginButton"
+					action="#{userController.processLogin(user)}" ajax="false"
+					value="Login" />
+				<p:commandButton title="Create User" onclick="PF('crUser').show()" />
+			</div>
+		</h:form>
+	</div>
+	<h:form id="clientCreateForm">
+		<p:dialog id="createUserModal" modal="true" widgetVar="crUser"
+			resizable="false" stylr="position:absolute" header="Create User"
+			hideEffect="false">
+			<h:panelGrid columns="2" id="createUserPanel">
+				Name:
+				<h:inputText value="#{user.userName}" id="name" />
+				Last Name:
+				<h:inputText value="#{user.userLastName}" id="lastName" />
+				Type:
+				<h:selectOneMenu value="#{user.userType}">
+					<f:selectItem itemValue="1" itemLabel="Admin" />
+					<f:selectItem itemValue="2" itemLabel="Client" />
+				</h:selectOneMenu>
+			    E-Mail: 
+			    <h:inputText value="#{user.email}" id="email" />
+			    Password: 
+			    <h:inputSecret id="password" value="#{user.password}" />
+			</h:panelGrid>
+			<p:outputPanel>
+				<p:commandButton value="Cancel" ajax="false"
+					onclick="PF('crUser').hide()" />
+				<p:commandButton value="Create" ajax="false"
+					action="#{userController.createUser(user)}" />
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+	<hr />
+	<h:outputText value="#{user.errorMessage}" escape="false" />
+</h:body>
+</html>
